@@ -23,7 +23,7 @@ package com.vladsch.ReverseRegEx.util;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-/**
+/*
  * Will convert a regular expression into an equivalent regular expression to be used on a reversed char sequence to perform backwards
  * search that will result in the same matches as the original pattern would when applied to non-reversed sequence, but the order of these
  * matches will be reversed.
