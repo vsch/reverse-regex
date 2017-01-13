@@ -1,0 +1,14 @@
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA
+
+# Maven
+target/
+/.idea/workspace.xml
+/reverse-regex.wiki
+/ReverseRegExAssets/
+/update-plugin.sh
+/out/

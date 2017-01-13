@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/reverse-regex.iml" filepath="$PROJECT_DIR$/reverse-regex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reverse-regex-test-suite/reverse-regex-test-suite.iml" filepath="$PROJECT_DIR$/reverse-regex-test-suite/reverse-regex-test-suite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reverse-regex-util/reverse-regex-util.iml" filepath="$PROJECT_DIR$/reverse-regex-util/reverse-regex-util.iml" />
+    </modules>
+  </component>
+</project>
