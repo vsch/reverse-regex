@@ -103,7 +103,7 @@ Some examples:
 | `(1(b)\2)(c)\3\2\1`                  | `1bbccb1bb`                                    | `((b)(?:\2)1)\2(c)\3\1`              | `bb1bccbb1`                                    |
 | `(1(abc)\2)(def)\3\2\1`              | `1abcabcdefdefabc1abcabc`                      | `((cba)(?:\2)1)\2(fed)\3\1`          | `cbacba1cbafedfedcbacba1`                      |
 | `(?<A>a)(b)(c)\3\2\k<A>`             |                                                | `(?<A>a)(b)(c)\3\2\k<A>`             |                                                |
-| `^(1(abc)\2)(def)\3\2\1(?=xyz)`      | `1abcabcdefdefabc1abcab` if followed by `cxyz` | `(?<=zyx)((cba)(?:\2)1)\2(fed)\3\1$` | `cbacba1cbafedfedcbacba1` if preceded by `zyx` |
+| `^(1(abc)\2)(def)\3\2\1(?=xyz)`      | `1abcabcdefdefabc1abcabc` if followed by `xyz` | `(?<=zyx)((cba)(?:\2)1)\2(fed)\3\1$` | `cbacba1cbafedfedcbacba1` if preceded by `zyx` |
 | `(a(b))(c)\Q(a(b))(c)\3\2\1\E\3\2\1` |                                                | `((b)a)\2(c)\Q1\2\3\)c())b(a(\E\3\1` |                                                |
 
 Contributing
