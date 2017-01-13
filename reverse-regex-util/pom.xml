@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.vladsch.reverse-regex</groupId>
-        <artifactId>reverse-regex-util</artifactId>
+        <artifactId>reverse-regex</artifactId>
         <version>0.1.0</version>
     </parent>
 

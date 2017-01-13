@@ -9,7 +9,7 @@ standard RegEx Java classes on a reversed character sequence of original text.
 * Java 7 or above
 * The core has no dependencies
 
-[![Build status](https://travis-ci.org/vsch/flexmark-java.svg?branch=master)](https://travis-ci.org/vsch/reverse-regex)
+[![Build status](https://travis-ci.org/vsch/reverse=regex.svg?branch=master)](https://travis-ci.org/vsch/reverse-regex)
 [![Maven Central status](https://img.shields.io/maven-central/v/com.vladsch.reverse-regex/reverse-regex.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.vladsch.reverse-regex%22)
 
 ### Motivation
