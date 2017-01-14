@@ -5,23 +5,20 @@ package com.vladsch.ReverseRegEx.util;
  * <p>
  * The hashCode is purposefully matched to the string equivalent or this.toString().hashCode()
  */
-public class ReversedCharSequence implements CharSequence {
+public class ReversedCharSequence extends ReverseIndexMapperBase implements ReverseCharSequence {
     private final CharSequence myChars;
     private final int myStartIndex;
     private final int myEndIndex;
     private int myHash;
     private IndexMapper myMapper;
 
-    public CharSequence getChars() {
+    @Override
+    public CharSequence getReversedChars() {
         return myChars;
     }
 
     public int getStartIndex() {
         return myStartIndex;
-    }
-
-    public int getEndIndex() {
-        return myEndIndex;
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -34,22 +31,17 @@ public class ReversedCharSequence implements CharSequence {
         myMapper = null;
     }
 
+    @Override
     public IndexMapper getIndexMapper() {
         if (myMapper == null) {
-            myMapper = new IndexMapper() {
-                @Override
-                public int map(final int index) {
-                    return ReversedCharSequence.this.reversedIndex(index);
-                }
-            };
+            myMapper = new ReverseIndexMapper(myEndIndex);
         }
         return myMapper;
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public int reversedIndex(int index) {
-        if (index < 0 || index > length()) throw new IndexOutOfBoundsException("" + index + " not in [0," + (length() - 1) + "]");
-        return myEndIndex - 1 - index;
+    @Override
+    public int getEndIndex() {
+        return myEndIndex;
     }
 
     @Override
@@ -59,15 +51,15 @@ public class ReversedCharSequence implements CharSequence {
 
     @Override
     public char charAt(int index) {
-        if (index < 0 || index >= length()) throw new IndexOutOfBoundsException("" + index + " not in [0," + (length() - 1) + ")");
-        return myChars.charAt(reversedIndex(index));
+        if (index < 0 || index >= length()) throw new IndexOutOfBoundsException("" + index + " not in [0," + length() + ")");
+        return myChars.charAt(mapIndex(index));
     }
 
     @Override
     public ReversedCharSequence subSequence(int start, int end) {
         if (start < 0 || end > length())
-            throw new IndexOutOfBoundsException("[" + start + ", " + end + ") not in [0," + (length() - 1) + ")");
-        final int startIndex = reversedIndex(end) + 1;
+            throw new IndexOutOfBoundsException("[" + start + ", " + end + ") not in [0," + length() + "]");
+        final int startIndex = mapBoundary(end);
         final int endIndex = startIndex + end - start;
         return startIndex == myStartIndex && endIndex == myEndIndex ? this : new ReversedCharSequence(myChars, startIndex, endIndex);
     }
@@ -128,7 +120,7 @@ public class ReversedCharSequence implements CharSequence {
         if (chars instanceof ReversedCharSequence) {
             final ReversedCharSequence reversedChars = (ReversedCharSequence) chars;
             if (reversedChars.myChars instanceof ReversedCharSequence) {
-                final int startIndex = reversedChars.reversedIndex(end) + 1;
+                final int startIndex = reversedChars.mapBoundary(end);
                 final int endIndex = startIndex + end - start;
                 return startIndex == 0 && endIndex == chars.length() ? (ReversedCharSequence) reversedChars.myChars : ((ReversedCharSequence) reversedChars.myChars).subSequence(startIndex, endIndex);
             }

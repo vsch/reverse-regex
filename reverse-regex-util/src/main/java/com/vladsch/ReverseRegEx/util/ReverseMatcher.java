@@ -10,29 +10,32 @@ import java.util.regex.Pattern;
  */
 public class ReverseMatcher implements MatchResult {
     private ReversedRegEx myReversedRegEx;
-    private ReversedCharSequence myText;
+    private ReverseCharSequence myText;
     private Matcher myMatcher;
 
-    private int mapOffset(int index) {
-        return myText.reversedIndex(index);
-    }
-
-    public ReverseMatcher(final ReversedRegEx reversedRegEx, final CharSequence text) {
+    /**
+     * Constructor of reversed matcher that takes a ReversedRegEx instance and an input character sequence.
+     * if input is not an instance of ReverseCharSequence then it is wrapped in ReversedCharSequence class.
+     *
+     * @param reversedRegEx reversed regex instance
+     * @param input char sequence to use as input for matching
+     */
+    public ReverseMatcher(final ReversedRegEx reversedRegEx, final CharSequence input) {
         myReversedRegEx = reversedRegEx;
-        myText = ReversedCharSequence.of(text);
-        myMatcher = Pattern.compile(myReversedRegEx.getReversed(), myReversedRegEx.getFlags()).matcher(myText);
+        myText = input instanceof ReverseCharSequence ? (ReverseCharSequence) input : ReversedCharSequence.of(input);
+        myMatcher = Pattern.compile(myReversedRegEx.pattern(), myReversedRegEx.getFlags()).matcher(myText);
     }
 
-    public ReversedRegEx getReversedRegEx() {
+    public ReversedRegEx reversedRegEx() {
         return myReversedRegEx;
     }
 
-    public ReversedCharSequence getReversedText() {
+    public ReverseCharSequence reversedText() {
         return myText;
     }
 
-    public CharSequence getText() {
-        return myText.getChars();
+    public CharSequence text() {
+        return myText.getReversedChars();
     }
 
     public Pattern pattern() {
@@ -45,13 +48,14 @@ public class ReverseMatcher implements MatchResult {
 
     /**
      * Does not reverse the string buffer, only the replacement param
+     * when all appending is done the buffer result should be reversed
      *
-     * @param sb target string buffer
+     * @param sb          target string buffer
      * @param replacement replacement string
      * @return this for chaining
      */
     public ReverseMatcher appendReplacement(final StringBuffer sb, final String replacement) {
-        myMatcher = myMatcher.appendReplacement(sb, reversedString(replacement));
+        myMatcher.appendReplacement(sb, reversedString(replacement));
         return this;
     }
 
@@ -67,39 +71,39 @@ public class ReverseMatcher implements MatchResult {
 
     public ReverseMatcher usePattern(final ReversedRegEx reversedRegEx) {
         myReversedRegEx = reversedRegEx;
-        myMatcher = myMatcher.usePattern(Pattern.compile(myReversedRegEx.getReversed(), myReversedRegEx.getFlags()));
+        myMatcher.usePattern(Pattern.compile(myReversedRegEx.pattern(), myReversedRegEx.getFlags()));
         return this;
     }
 
     public ReverseMatcher reset() {
-        myMatcher = myMatcher.reset();
+        myMatcher.reset();
         return this;
     }
 
     public ReverseMatcher reset(final CharSequence input) {
-        myText = ReversedCharSequence.of(input);
-        myMatcher = myMatcher.reset(myText);
+        myText = input instanceof ReversedCharSequence ? (ReversedCharSequence) input : ReversedCharSequence.of(input);
+        myMatcher.reset(myText);
         return this;
     }
 
     @Override
     public int start() {
-        return mapOffset(myMatcher.end());
+        return myText.mapBoundary(myMatcher.end());
     }
 
     @Override
     public int start(final int group) {
-        return mapOffset(myMatcher.end(myReversedRegEx.getReversedGroupIndex(group)));
+        return myText.mapBoundary(myMatcher.end(myReversedRegEx.getReversedGroupIndex(group)));
     }
 
     @Override
     public int end() {
-        return mapOffset(myMatcher.start());
+        return myText.mapBoundary(myMatcher.start());
     }
 
     @Override
     public int end(final int group) {
-        return mapOffset(myMatcher.start(myReversedRegEx.getReversedGroupIndex(group)));
+        return myText.mapBoundary(myMatcher.start(myReversedRegEx.getReversedGroupIndex(group)));
     }
 
     public static String reversedString(CharSequence s) {
@@ -134,7 +138,8 @@ public class ReverseMatcher implements MatchResult {
     }
 
     public boolean find(final int start) {
-        return myMatcher.find(mapOffset(start));
+        myMatcher.region(myMatcher.regionStart(), myText.mapBoundary(start));
+        return myMatcher.find();
     }
 
     public boolean lookingAt() {
@@ -153,17 +158,17 @@ public class ReverseMatcher implements MatchResult {
         return reversedString(myMatcher.replaceFirst(reversedString(replacement)));
     }
 
-    public Matcher region(final int start, final int end) {
-        myMatcher = myMatcher.region(mapOffset(end), mapOffset(start));
-        return myMatcher;
+    public ReverseMatcher region(final int start, final int end) {
+        myMatcher.region(myText.mapBoundary(end), myText.mapBoundary(start));
+        return this;
     }
 
     public int regionStart() {
-        return mapOffset(myMatcher.regionEnd());
+        return myText.mapBoundary(myMatcher.regionEnd());
     }
 
     public int regionEnd() {
-        return mapOffset(myMatcher.regionStart());
+        return myText.mapBoundary(myMatcher.regionStart());
     }
 
     public boolean hasTransparentBounds() {
@@ -171,7 +176,7 @@ public class ReverseMatcher implements MatchResult {
     }
 
     public ReverseMatcher useTransparentBounds(final boolean b) {
-        myMatcher = myMatcher.useTransparentBounds(b);
+        myMatcher.useTransparentBounds(b);
         return this;
     }
 
@@ -180,7 +185,7 @@ public class ReverseMatcher implements MatchResult {
     }
 
     public ReverseMatcher useAnchoringBounds(final boolean b) {
-        myMatcher = myMatcher.useAnchoringBounds(b);
+        myMatcher.useAnchoringBounds(b);
         return this;
     }
 

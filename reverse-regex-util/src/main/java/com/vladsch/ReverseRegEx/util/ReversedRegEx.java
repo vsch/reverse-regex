@@ -20,6 +20,7 @@
 
 package com.vladsch.ReverseRegEx.util;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -225,14 +226,12 @@ public final class ReversedRegEx {
      */
     private int[] reversedToOriginalGroups;
 
-    /**
-     * This private constructor is used to create all ReverseRegEx instances. The pattern
-     * string and match flags are all that is needed to completely describe
-     * a ReverseRegEx pattern.
-     */
+    private Pattern compiled;
+
     private ReversedRegEx(String p, int f) {
         pattern = p;
         flags = f;
+        compiled = null;
 
         // to use UNICODE_CASE if UNICODE_CHARACTER_CLASS present
         if ((flags & Pattern.UNICODE_CHARACTER_CLASS) != 0)
@@ -250,23 +249,68 @@ public final class ReversedRegEx {
         }
     }
 
-    public static ReversedRegEx reversed(String p) {
+    private Pattern compiled() {
+        if (compiled == null) {
+            synchronized (this) {
+                compiled = Pattern.compile(reversed, flags);
+            }
+        }
+        return compiled;
+    }
+
+    public String toString() {
+        return reversed;
+    }
+
+    public static ReversedRegEx reversedRegEx(String p) {
         //noinspection UnnecessaryLocalVariable
         ReversedRegEx regEx = new ReversedRegEx(p, 0);
         return regEx;
     }
 
-    public static ReversedRegEx reversed(String p, int f) {
+    public static ReversedRegEx reversedRegEx(String p, int f) {
         //noinspection UnnecessaryLocalVariable
         ReversedRegEx regEx = new ReversedRegEx(p, f);
         return regEx;
     }
 
-    public String getPattern() {
+    public static Pattern compile(String regex) {
+        return compile(regex, 0);
+    }
+
+    public static Pattern compile(String regex, int flags) {
+        ReversedRegEx regEx = new ReversedRegEx(regex, flags);
+        return regEx.compiled();
+    }
+
+    public ReverseMatcher matcher(CharSequence input) {
+        return new ReverseMatcher(this, input);
+    }
+
+    public static boolean matches(String regex, CharSequence input) {
+        Pattern p = compile(regex);
+        Matcher m = p.matcher(input);
+        return m.matches();
+    }
+
+    public String[] split(CharSequence input, int limit) {
+        Pattern p = compiled();
+        String[] result = p.split(ReversedCharSequence.of(input), limit);
+        for (int i = 0; i < result.length; i++) {
+            result[i] = ReversedCharSequence.of(result[i]).toString();
+        }
+        return result;
+    }
+
+    public String[] split(CharSequence input) {
+        return split(input, 0);
+    }
+
+    public String originalPattern() {
         return pattern;
     }
 
-    public String getReversed() {
+    public String pattern() {
         return reversed;
     }
 

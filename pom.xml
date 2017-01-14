@@ -5,7 +5,7 @@
 
     <groupId>com.vladsch.reverse-regex</groupId>
     <artifactId>reverse-regex</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <name>reverse-regex</name>
     <description>
         Java Implementation of RegEx Pattern Reversing library for backwards searching using Java Pattern class and a reversed character sequence of the original text
@@ -159,7 +159,7 @@
             <dependency>
                 <groupId>com.vladsch.reverse-regex</groupId>
                 <artifactId>reverse-regex-util</artifactId>
-                <version>0.1.0</version>
+                <version>0.2.0</version>
             </dependency>
 
             <!-- Common test dependencies -->

@@ -6,13 +6,13 @@ import static org.junit.Assert.*;
 
 public class ReversedRegExTest {
     private static String reversed(String p) {
-        ReversedRegEx regEx = ReversedRegEx.reversed(p);
-        return regEx.getReversed();
+        ReversedRegEx regEx = ReversedRegEx.reversedRegEx(p);
+        return regEx.pattern();
     }
 
     private static String reversed(String p, int f) {
-        ReversedRegEx regEx = ReversedRegEx.reversed(p, f);
-        return regEx.getReversed();
+        ReversedRegEx regEx = ReversedRegEx.reversedRegEx(p, f);
+        return regEx.pattern();
     }
 
     @Test
