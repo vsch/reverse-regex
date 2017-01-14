@@ -24,7 +24,7 @@ I wanted to have something that would be robust to handle any valid Java regular
 the use case only requiring:
 
 * generate reversed regular expression
-* wrap the original sequence into ReverseCharSequence
+* wrap the original sequence into ReversedCharSequence
 * use standard Java regex support with ReverseRegEx wrapper classes to make mapping from
   reversed sequence offsets and changed captured groups transparent.
 * the matches should be identical to original regex but in reverse order as you would expect
