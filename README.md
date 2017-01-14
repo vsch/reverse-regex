@@ -24,12 +24,12 @@ I wanted to have something that would be robust to handle any valid Java regular
 the use case only requiring:
 
 * generate reversed regular expression
-* wrap the original sequence into ReversedCharSequence
-* use standard Java regex support with ReverseRegEx wrapper classes to make mapping from
+* wrap the original sequence into `ReversedCharSequence`
+* use standard Java regex support with `ReverseMatcher` wrapper class to make mapping from
   reversed sequence offsets and changed captured groups transparent.
 * the matches should be identical to original regex but in reverse order as you would expect
   from a backwards search.
-* backwards replacements should be possible by using included utility classes
+* backwards replacements should also work transparently
 
 ### What is supported
 
