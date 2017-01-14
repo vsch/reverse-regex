@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 @org.junit.runner.RunWith(Suite.class)
 @Suite.SuiteClasses({
         ReversedCharSequenceTest.class,
-        ReversedRegExTest.class,
+        ReversePatternTest.class,
         ReverseMatcherTest.class,
 })
 public class UtilsTestSuite {

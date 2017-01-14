@@ -5,7 +5,6 @@
       <sourceFolder url="file://$MODULE_DIR$/ReverseRegExAssets/support" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ReverseRegExAssets/youtrack" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/ReverseRegExAssets/issues" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/ReverseRegExAssets/Samples/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

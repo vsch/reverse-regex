@@ -4,14 +4,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ReversedRegExTest {
+public class ReversePatternTest {
     private static String reversed(String p) {
-        ReversedRegEx regEx = ReversedRegEx.reversedRegEx(p);
+        ReversePattern regEx = ReversePattern.compile(p);
         return regEx.pattern();
     }
 
     private static String reversed(String p, int f) {
-        ReversedRegEx regEx = ReversedRegEx.reversedRegEx(p, f);
+        ReversePattern regEx = ReversePattern.compile(p, f);
         return regEx.pattern();
     }
 

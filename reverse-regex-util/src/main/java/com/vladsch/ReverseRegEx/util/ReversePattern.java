@@ -196,7 +196,7 @@ import java.util.regex.PatternSyntaxException;
  * first.
  */
 
-public final class ReversedRegEx {
+public final class ReversePattern implements RegExPattern {
     /**
      * The original regular-expression pattern string.
      */
@@ -228,7 +228,7 @@ public final class ReversedRegEx {
 
     private Pattern compiled;
 
-    private ReversedRegEx(String p, int f) {
+    private ReversePattern(String p, int f) {
         pattern = p;
         flags = f;
         compiled = null;
@@ -249,7 +249,8 @@ public final class ReversedRegEx {
         }
     }
 
-    private Pattern compiled() {
+    @Override
+    public Pattern compiled() {
         if (compiled == null) {
             synchronized (this) {
                 compiled = Pattern.compile(reversed, flags);
@@ -262,37 +263,30 @@ public final class ReversedRegEx {
         return reversed;
     }
 
-    public static ReversedRegEx reversedRegEx(String p) {
+    public static ReversePattern compile(String p) {
         //noinspection UnnecessaryLocalVariable
-        ReversedRegEx regEx = new ReversedRegEx(p, 0);
+        ReversePattern regEx = new ReversePattern(p, 0);
         return regEx;
     }
 
-    public static ReversedRegEx reversedRegEx(String p, int f) {
+    public static ReversePattern compile(String p, int f) {
         //noinspection UnnecessaryLocalVariable
-        ReversedRegEx regEx = new ReversedRegEx(p, f);
+        ReversePattern regEx = new ReversePattern(p, f);
         return regEx;
     }
 
-    public static Pattern compile(String regex) {
-        return compile(regex, 0);
-    }
-
-    public static Pattern compile(String regex, int flags) {
-        ReversedRegEx regEx = new ReversedRegEx(regex, flags);
-        return regEx.compiled();
-    }
-
+    @Override
     public ReverseMatcher matcher(CharSequence input) {
-        return new ReverseMatcher(this, input);
+        return new ReverseMatcher(this, ReversedCharSequence.of(input));
     }
 
     public static boolean matches(String regex, CharSequence input) {
-        Pattern p = compile(regex);
-        Matcher m = p.matcher(input);
+        RegExPattern p = compile(regex);
+        RegExMatcher m = p.matcher(input);
         return m.matches();
     }
 
+    @Override
     public String[] split(CharSequence input, int limit) {
         Pattern p = compiled();
         String[] result = p.split(ReversedCharSequence.of(input), limit);
@@ -302,6 +296,7 @@ public final class ReversedRegEx {
         return result;
     }
 
+    @Override
     public String[] split(CharSequence input) {
         return split(input, 0);
     }
@@ -310,11 +305,13 @@ public final class ReversedRegEx {
         return pattern;
     }
 
+    @Override
     public String pattern() {
         return reversed;
     }
 
-    public int getFlags() {
+    @Override
+    public int flags() {
         return flags;
     }
 

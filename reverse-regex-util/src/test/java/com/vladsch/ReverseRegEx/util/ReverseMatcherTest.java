@@ -10,7 +10,7 @@ public class ReverseMatcherTest {
 
     @Test
     public void test_basic() throws Exception {
-        ReversedRegEx regEx = ReversedRegEx.reversedRegEx("\\b(id)\\b\\s*=\\s*(.+?)\\s*;$");
+        ReversePattern regEx = ReversePattern.compile("\\b(id)\\b\\s*=\\s*(.+?)\\s*;$");
         assertEquals("^;\\s*(.+?)\\s*=\\s*\\b(di)\\b", regEx.pattern());
 
         final String text = "test.id  = def;";
@@ -45,7 +45,7 @@ public class ReverseMatcherTest {
 
     @Test
     public void test_split() throws Exception {
-        ReversedRegEx regEx = ReversedRegEx.reversedRegEx("\\s*,\\s*");
+        ReversePattern regEx = ReversePattern.compile("\\s*,\\s*");
         final String text = "a , abc,def, xyz";
         Pattern original = Pattern.compile(regEx.originalPattern());
         String[] originalSplit = original.split(text);
