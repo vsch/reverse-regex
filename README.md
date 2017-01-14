@@ -1,7 +1,7 @@
 reverse-regex
 =============
 
-**reverse-regex** is a Java utility library that allows Java to perform backward searches using
+**reverse-regex** is a Java utility library that allows Java to perform backward search using
 standard RegEx Java classes on a reversed character sequence of original text.
 
 ### Requirements
@@ -17,15 +17,15 @@ standard RegEx Java classes on a reversed character sequence of original text.
 I searched for a solution to reverse searching using RegEx in Java and found references that it
 is supported by .NET but not Java. There were also trivial suggestions such as do a forward
 search on a reversed sequence which obviously would not work without also reversing the regular
-expression which is used.
+expression which is used. Some simpler solutions reversed the characters of sequences between
+`|` and called it a day.
 
-Some simpler solutions reversed the characters of sequences between `|` and called it a day. I
-wanted to have something that would be robust to handle any valid Java regular expression with
+I wanted to have something that would be robust to handle any valid Java regular expression with
 the use case only requiring:
 
 * generate reversed regular expression
 * wrap the original sequence into ReverseCharSequence
-* use standard Java regex support library with ReverseRegEx wrapper classes to make mapping from
+* use standard Java regex support with ReverseRegEx wrapper classes to make mapping from
   reversed sequence offsets and changed captured groups transparent.
 * the matches should be identical to original regex but in reverse order as you would expect
   from a backwards search.
