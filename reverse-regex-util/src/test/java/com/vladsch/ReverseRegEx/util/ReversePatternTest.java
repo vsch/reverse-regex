@@ -288,4 +288,14 @@ public class ReversePatternTest {
         assertEquals("(?>X)",                       reversed("(?>X)"));
         // @formatter:on
     }
+
+    @Test
+    public void test_classesExtra() throws Exception {
+        // @formatter:off
+        assertEquals("[\\Q;\\E]",                    reversed("[\\Q;\\E]"));
+        assertEquals("[\\Qabc\\E]",                  reversed("[\\Qabc\\E]"));
+        assertEquals("[a-z]",                        reversed("[a-z]"));
+        assertEquals("[^a-z]",                       reversed("[^a-z]"));
+        // @formatter:on
+    }
 }

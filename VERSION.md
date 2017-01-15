@@ -6,6 +6,7 @@ reverse-regex
 [TOC]: # ""
 
 - [To Do](#to-do)
+- [0.3.1](#031)
 - [0.3.0](#030)
 - [0.2.0](#020)
 - [0.1.0](#010)
@@ -19,6 +20,11 @@ reverse-regex
 
 
 &nbsp;</details>
+
+0.3.1
+-----
+
+* Fix: #1, `\Q` `\E` not supported inside character classes
 
 0.3.0
 -----

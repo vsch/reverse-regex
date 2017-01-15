@@ -20,7 +20,6 @@
 
 package com.vladsch.ReverseRegEx.util;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -1037,19 +1036,20 @@ LOOP:
                     group();
                     break;
 
-                case '[':
-                    int end = clazz(cursor, true);
-                    if (end < cursor) {
-                        // output the rest of what was consumed
-                        addSequence(pattern.substring(end, cursor));
-                    }
+                case '[': {
+                    StringBuilder sb = new StringBuilder();
+
+                    sb.append('[');
+                    clazz(sb, true);
+                    addSequence(sb.toString());
                     break;
+                }
+
                 case '\\':
                     int start = cursor;
                     ch = nextEscaped();
                     if (ch == 'p' || ch == 'P') {
                         boolean oneLetter = true;
-                        boolean comp = (ch == 'P');
                         ch = next(); // Consume { if present
                         if (ch != '{') {
                             unread();
@@ -1491,17 +1491,13 @@ LOOP:
      * Consumes a ] on the way out if consume is true. Usually consume
      * is true except for the case of [abc&&def] where def is a separate
      * right hand node with "understood" brackets.
-     *
-     * @param startCursor - cursor from which output has not been generated
-     * @return startCursor from which output has not been generated
      */
-    private int clazz(int startCursor, boolean consume) {
-        boolean include = true;
+    private void clazz(StringBuilder sb, boolean consume) {
         boolean firstInClass = true;
-        int start = startCursor;
         boolean hadClass = false;
 
         int ch = next();
+
         for (; ; ) {
             switch (ch) {
                 case '^':
@@ -1509,8 +1505,8 @@ LOOP:
                     if (firstInClass) {
                         if (codePointAt(cursor - codePointBackStep(cursor)) != '[')
                             break;
+                        sb.append('^');
                         ch = next();
-                        include = !include;
                         continue;
                     } else {
                         // ^ not first in class, treat as literal
@@ -1518,21 +1514,25 @@ LOOP:
                     }
                 case '[':
                     firstInClass = false;
-                    start = clazz(start, true);
+                    sb.append("[");
+                    clazz(sb, true);
                     hadClass = true;
                     ch = peek();
                     continue;
                 case '&':
                     firstInClass = false;
+                    sb.append('&');
                     ch = next();
                     if (ch == '&') {
+                        sb.append('&');
                         ch = next();
                         while (ch != ']' && ch != '&') {
                             if (ch == '[') {
-                                start = clazz(start, true);
+                                sb.append('[');
+                                clazz(sb, true);
                             } else { // abc&&def
                                 unread();
-                                start = clazz(start, false);
+                                clazz(sb, false);
                             }
                             ch = peek();
                         }
@@ -1550,16 +1550,18 @@ LOOP:
                 case ']':
                     firstInClass = false;
                     if (hadClass) {
-                        if (consume)
+                        if (consume) {
                             next();
-                        return start;
+                            sb.append(']');
+                        }
+                        return;
                     }
                     break;
                 default:
                     firstInClass = false;
                     break;
             }
-            start = range(start);
+            range(sb);
             hadClass = true;
             ch = peek();
         }
@@ -1568,8 +1570,8 @@ LOOP:
     /**
      * Parse a single character or a character range in a character class
      */
-    private int range(int startCursor) {
-        int[] start = { startCursor };
+    private void range(StringBuilder sb) {
+        int start =  cursor;
 
         int ch = peek();
         if (ch == '\\') {
@@ -1586,39 +1588,42 @@ LOOP:
                 }
 
                 family(oneLetter);
-                return start[0];
+                sb.append(pattern.substring(start, cursor));
+                return;
             } else { // ordinary escape
                 unread();
-                ch = escape(start, true, true);
-                if (ch == -1)
-                    return start[0];
+                ch = escape(sb, true);
+                if (ch == -1) return;
             }
         } else {
             next();
         }
+
         if (ch >= 0) {
             if (peek() == '-') {
                 int endRange = codePointAt(cursor + codePointStep(cursor));
 
                 if (endRange == '[') {
-                    return start[0];
+                    return;
                 }
 
                 if (endRange != ']') {
                     next();
                     int m = peek();
                     if (m == '\\') {
-                        m = escape(start, true, false);
+                        m = escape(sb, false);
                     } else {
                         next();
                     }
                     if (m < ch) {
                         throw error("Illegal character range");
                     }
-                    return start[0];
+                    sb.append(pattern.substring(start, cursor));
+                    return;
                 }
             }
-            return start[0];
+            sb.append(pattern.substring(start, cursor));
+            return;
         }
         throw error("Unexpected character '" + ((char) ch) + "'");
     }
@@ -1663,7 +1668,7 @@ LOOP:
     private void atom() {
         int first = 0;
         int prev = -1;
-        int[] start = { cursor };
+        int start = cursor;
         int ch = peek();
 
         for (; ; ) {
@@ -1703,24 +1708,23 @@ LOOP:
                         }
 
                         family(oneLetter);
-                        addSequence(pattern.substring(start[0], cursor));
+                        addSequence(pattern.substring(start, cursor));
                         return;
                     }
 
                     unread();
                     prev = cursor;
 
-                    ch = escape(start, false, true);
+                    ch = escape(null, true);
                     if (ch >= 0) {
                         // output the escape sequence
-                        addSequence(pattern.substring(start[0], cursor));
-                        start[0] = cursor;
+                        addSequence(pattern.substring(start, cursor));
+                        start = cursor;
                         first = 0;
 
                         ch = peek();
                         continue;
                     } else {
-                        assert start[0] == cursor;
                         return;
                     }
 
@@ -1739,8 +1743,8 @@ LOOP:
             break;
         }
 
-        if (start[0] < cursor) {
-            addSequenceReversed(pattern.substring(start[0], cursor));
+        if (start < cursor) {
+            addSequenceReversed(pattern.substring(start, cursor));
         }
     }
 
@@ -1788,9 +1792,10 @@ LOOP:
     /**
      * Parses an escape sequence
      */
-    private int escape(int[] start, boolean inclass, boolean create) {
+    private int escape(StringBuilder sb, boolean create) {
         int startM2 = cursor;
         int ch = skip();
+        boolean inclass = sb != null;
 
         switch (ch) {
             case '0':
@@ -1807,11 +1812,7 @@ LOOP:
             case '9':
                 if (inclass) break;
                 if (create) {
-                    if (start[0] < startM2) addSequence(pattern.substring(start[0], startM2));
-
                     int groupNum = ref(ch - '0');
-                    start[0] = cursor;
-
                     int sequenceStart = sequenceIndex;
                     addSequence(pattern.substring(startM2, cursor));
                     addBackReference(groupNum - 1, sequenceStart);
@@ -1821,8 +1822,6 @@ LOOP:
             case 'A':
                 if (inclass) break;
                 if (create) {
-                    if (start[0] < startM2) addSequence(pattern.substring(start[0], startM2));
-                    start[0] = cursor;
                     addSequence("\\z");
                 }
                 return -1;
@@ -1831,8 +1830,6 @@ LOOP:
             case 'z':
                 if (inclass) break;
                 if (create) {
-                    if (start[0] < startM2) addSequence(pattern.substring(start[0], startM2));
-                    start[0] = cursor;
                     addSequence("\\A");
                 }
                 return -1;
@@ -1842,8 +1839,7 @@ LOOP:
             case 'b':
                 if (inclass) break;
                 if (create) {
-                    addSequence(pattern.substring(start[0], cursor));
-                    start[0] = cursor;
+                    addSequence(pattern.substring(startM2, cursor));
                 }
                 return -1;
 
@@ -1855,17 +1851,17 @@ LOOP:
             case 'v':
             case 'w':
                 if (create) {
-                    addSequence(pattern.substring(start[0], cursor));
-                    start[0] = cursor;
+                    if (inclass) {
+                        sb.append(pattern.substring(startM2, cursor));
+                    } else {
+                        addSequence(pattern.substring(startM2, cursor));
+                    }
                 }
                 return -1;
 
             case 'Q':
-                // take all to next \E as literals, but reversed
-                if (inclass) break;
+                // take all to next \E as literals, but reversed if not in a character class
                 if (create) {
-                    if (start[0] < startM2) addSequence(pattern.substring(start[0], startM2));
-
                     // look for \E
                     int end = cursor;
                     startM2 = end;
@@ -1885,10 +1881,15 @@ LOOP:
                     if (cursor == patternLength && end != cursor - 2)
                         throw error("Unterminated \\Q");
 
-                    addSequence("\\E");
-                    addSequenceReversed(pattern.substring(startM2, end));
-                    addSequence("\\Q");
-                    start[0] = cursor;
+                    if (inclass) {
+                        sb.append("\\Q");
+                        sb.append(pattern.substring(startM2, end));
+                        sb.append("\\E");
+                    } else {
+                        addSequence("\\E");
+                        addSequenceReversed(pattern.substring(startM2, end));
+                        addSequence("\\Q");
+                    }
                 }
                 return -1;
 
@@ -1905,9 +1906,6 @@ LOOP:
                     throw error("(named capturing group <" + name + "> does not exit");
 
                 if (create) {
-                    if (start[0] < startM2) addSequence(pattern.substring(start[0], startM2));
-                    start[0] = cursor;
-
                     int startSequence = sequenceIndex;
                     addSequence(pattern.substring(startM2, cursor));
                     addNamedBackReference(namedGroup, startSequence);
