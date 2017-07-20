@@ -4,6 +4,8 @@ reverse-regex
 **reverse-regex** is a Java utility library that allows Java to perform backward search using
 standard RegEx Java classes on a reversed character sequence of original text.
 
+[![GitQ](https://gitq.com/badge.svg)](https://gitq.com/vsch/reverse-regex)
+
 ### Requirements
 
 * Java 7 or above
