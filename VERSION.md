@@ -25,7 +25,7 @@ reverse-regex
 0.3.2
 -----
 
-* Fix: pom packaging and url
+* Fix: pom url
 
 0.3.1
 -----
