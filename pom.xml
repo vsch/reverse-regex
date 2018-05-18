@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <groupId>com.vladsch.reverse-regex</groupId>
     <artifactId>reverse-regex</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
     <name>reverse-regex</name>
     <description>
         Java Implementation of RegEx Pattern Reversing library for backwards searching using Java Pattern class and a reversed character sequence of the original text
     </description>
 
-    <url>https://github.com/vladsch/reverse-regex</url>
+    <url>https://github.com/vsch/reverse-regex</url>
 
     <modules>
         <module>reverse-regex-util</module>

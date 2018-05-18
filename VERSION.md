@@ -3,9 +3,10 @@ reverse-regex
 
 &nbsp;<details id="version-history"><summary>**Version History**</summary>
 
-[TOC]: # ""
+[TOC]: # " "
 
 - [To Do](#to-do)
+- [0.3.2](#032)
 - [0.3.1](#031)
 - [0.3.0](#030)
 - [0.2.0](#020)
@@ -20,6 +21,11 @@ reverse-regex
 
 
 &nbsp;</details>
+
+0.3.2
+-----
+
+* Fix: pom packaging and url
 
 0.3.1
 -----
