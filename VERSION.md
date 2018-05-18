@@ -25,6 +25,7 @@ reverse-regex
 0.3.2
 -----
 
+* Change: min java version to 1.8
 * Fix: pom url
 
 0.3.1

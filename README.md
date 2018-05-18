@@ -8,7 +8,7 @@ standard RegEx Java classes on a reversed character sequence of original text.
 
 ### Requirements
 
-* Java 7 or above
+* Java 8 or above
 * The core has no dependencies
 
 [![Build status](https://travis-ci.org/vsch/reverse-regex.svg?branch=master)](https://travis-ci.org/vsch/reverse-regex)
