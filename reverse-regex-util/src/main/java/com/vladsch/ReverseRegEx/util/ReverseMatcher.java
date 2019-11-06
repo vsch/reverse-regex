@@ -18,7 +18,7 @@ public class ReverseMatcher implements RegExMatcher {
      * if input is not an instance of ReverseCharSequence then it is wrapped in ReversedCharSequence class.
      *
      * @param reversePattern reversed regex instance
-     * @param input char sequence to use as input for matching
+     * @param input          char sequence to use as input for matching
      */
     public ReverseMatcher(final ReversePattern reversePattern, final CharSequence input) {
         myReversePattern = reversePattern;
@@ -54,6 +54,7 @@ public class ReverseMatcher implements RegExMatcher {
      *
      * @param sb          target string buffer
      * @param replacement replacement string
+     *
      * @return this for chaining
      */
     @Override
@@ -66,6 +67,7 @@ public class ReverseMatcher implements RegExMatcher {
      * Does not reverse the string buffer, only the replacement param
      *
      * @param sb target string buffer
+     *
      * @return target string buffer
      */
     @Override

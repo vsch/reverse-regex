@@ -14,5 +14,6 @@ public interface IndexMapper {
     };
 
     int mapIndex(int index);
+
     int mapBoundary(int index);
 }

@@ -1571,7 +1571,7 @@ LOOP:
      * Parse a single character or a character range in a character class
      */
     private void range(StringBuilder sb) {
-        int start =  cursor;
+        int start = cursor;
 
         int ch = peek();
         if (ch == '\\') {
@@ -1588,7 +1588,7 @@ LOOP:
                 }
 
                 family(oneLetter);
-                sb.append(pattern.substring(start, cursor));
+                sb.append(pattern, start, cursor);
                 return;
             } else { // ordinary escape
                 unread();
@@ -1618,11 +1618,11 @@ LOOP:
                     if (m < ch) {
                         throw error("Illegal character range");
                     }
-                    sb.append(pattern.substring(start, cursor));
+                    sb.append(pattern, start, cursor);
                     return;
                 }
             }
-            sb.append(pattern.substring(start, cursor));
+            sb.append(pattern, start, cursor);
             return;
         }
         throw error("Unexpected character '" + ((char) ch) + "'");
@@ -1852,7 +1852,7 @@ LOOP:
             case 'w':
                 if (create) {
                     if (inclass) {
-                        sb.append(pattern.substring(startM2, cursor));
+                        sb.append(pattern, startM2, cursor);
                     } else {
                         addSequence(pattern.substring(startM2, cursor));
                     }
@@ -1883,7 +1883,7 @@ LOOP:
 
                     if (inclass) {
                         sb.append("\\Q");
-                        sb.append(pattern.substring(startM2, end));
+                        sb.append(pattern, startM2, end);
                         sb.append("\\E");
                     } else {
                         addSequence("\\E");

@@ -20,7 +20,6 @@
 
 package com.vladsch.ReverseRegEx.util;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ForwardPattern implements RegExPattern {
@@ -67,7 +66,7 @@ public final class ForwardPattern implements RegExPattern {
 
     @Override
     public String[] split(CharSequence input, int limit) {
-        return myPattern.split(input,limit);
+        return myPattern.split(input, limit);
     }
 
     @Override
