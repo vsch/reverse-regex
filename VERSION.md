@@ -6,6 +6,7 @@ reverse-regex
 [TOC]: # " "
 
 - [To Do](#to-do)
+- [0.3.4](#034)
 - [0.3.2](#032)
 - [0.3.1](#031)
 - [0.3.0](#030)
@@ -21,6 +22,12 @@ reverse-regex
 
 
 &nbsp;</details>
+
+0.3.4
+-----
+
+* change project java to 1.8
+* reformat code
 
 0.3.2
 -----
