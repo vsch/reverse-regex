@@ -298,4 +298,11 @@ public class ReversePatternTest {
         assertEquals("[^a-z]",                       reversed("[^a-z]"));
         // @formatter:on
     }
+
+    @Test
+    public void test_backwardsBackSlashes() throws Exception {
+        // @formatter:off
+        assertEquals("(?<!\\Q\\\\E)(\\Q\\\\\\E)(?!\\Q\\\\E)",                    reversed("(?<!\\Q\\\\E)(\\Q\\\\\\E)(?!\\Q\\\\E)"));
+        // @formatter:on
+    }
 }

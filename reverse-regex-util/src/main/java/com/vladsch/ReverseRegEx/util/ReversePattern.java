@@ -1865,10 +1865,16 @@ LOOP:
                     // look for \E
                     int end = cursor;
                     startM2 = end;
+                    boolean lastWasBackslash = false;
 
                     while (cursor < patternLength) {
                         end = cursor;
                         ch = read();
+
+                        if (lastWasBackslash && ch == 'E') break;
+
+                        lastWasBackslash = false;
+
                         if (ch != '\\') continue;
 
                         if (cursor == patternLength)
@@ -1876,6 +1882,8 @@ LOOP:
 
                         ch = read();
                         if (ch == 'E') break;
+
+                        lastWasBackslash = ch == '\\';
                     }
 
                     if (cursor == patternLength && end != cursor - 2)
@@ -1884,9 +1892,9 @@ LOOP:
                     if (inclass) {
                         sb.append("\\Q");
                         sb.append(pattern, startM2, end);
-                        sb.append("\\E");
+                        sb.append(lastWasBackslash ? "E": "\\E");
                     } else {
-                        addSequence("\\E");
+                        addSequence(lastWasBackslash ? "E": "\\E");
                         addSequenceReversed(pattern.substring(startM2, end));
                         addSequence("\\Q");
                     }
