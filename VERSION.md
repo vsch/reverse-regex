@@ -6,6 +6,7 @@ reverse-regex
 [TOC]: # " "
 
 - [To Do](#to-do)
+- [0.3.6](#036)
 - [0.3.4](#034)
 - [0.3.2](#032)
 - [0.3.1](#031)
@@ -20,8 +21,13 @@ reverse-regex
 
 ## To Do
 
-
 &nbsp;</details>
+
+0.3.6
+-----
+
+* Fix: improper parsing of `\Q\E` with odd number of backslashes would generate
+  PatternSyntaxException.
 
 0.3.4
 -----
