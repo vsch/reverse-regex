@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="reverse-regex-util:jar">
+  <artifact type="jar" build-on-make="true" name="reverse-regex-util:jar">
     <output-path>$PROJECT_DIR$/out/artifacts</output-path>
     <root id="archive" name="reverse-regex-util.jar">
       <element id="module-output" name="reverse-regex-util" />
