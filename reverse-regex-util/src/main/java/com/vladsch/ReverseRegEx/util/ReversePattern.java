@@ -1865,37 +1865,37 @@ LOOP:
                     // look for \E
                     int end = cursor;
                     startM2 = end;
-                    boolean lastWasBackslash = false;
+                    int backslashCount = 0;
 
                     while (cursor < patternLength) {
                         end = cursor;
                         ch = read();
 
-                        if (lastWasBackslash && ch == 'E') break;
+                        if (backslashCount > 0 && ch == 'E') break;
 
-                        lastWasBackslash = false;
+                        if (ch != '\\') {
+                            backslashCount = 0;
+                            continue;
+                        }
 
-                        if (ch != '\\') continue;
+                        backslashCount++;
 
                         if (cursor == patternLength)
                             throw error("Unterminated \\Q");
-
-                        ch = read();
-                        if (ch == 'E') break;
-
-                        lastWasBackslash = ch == '\\';
                     }
 
                     if (cursor == patternLength && end != cursor - 2)
                         throw error("Unterminated \\Q");
 
+                    String text = pattern.substring(startM2, end - 1);
+
                     if (inclass) {
                         sb.append("\\Q");
-                        sb.append(pattern, startM2, end);
-                        sb.append(lastWasBackslash ? "E": "\\E");
+                        sb.append(text);
+                        sb.append("\\E");
                     } else {
-                        addSequence(lastWasBackslash ? "E": "\\E");
-                        addSequenceReversed(pattern.substring(startM2, end));
+                        addSequence("\\E");
+                        addSequenceReversed(text);
                         addSequence("\\Q");
                     }
                 }

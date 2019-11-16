@@ -1,6 +1,10 @@
 package com.vladsch.ReverseRegEx.util;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import java.util.regex.PatternSyntaxException;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +18,9 @@ public class ReversePatternTest {
         ReversePattern regEx = ReversePattern.compile(p, f);
         return regEx.pattern();
     }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void test_basic() throws Exception {
@@ -124,13 +131,6 @@ public class ReversePatternTest {
         assertEquals("((cba)(?:\\2)1)\\2(fed)\\3\\1",       reversed("(1(abc)\\2)(def)\\3\\2\\1"));
         assertEquals("^((cba)(?:\\2)1)\\2(fed)\\3\\1$",     reversed("^(1(abc)\\2)(def)\\3\\2\\1$"));
         assertEquals("(?<=zyx)((cba)(?:\\2)1)\\2(fed)\\3\\1$",     reversed("^(1(abc)\\2)(def)\\3\\2\\1(?=xyz)"));
-        // @formatter:on
-    }
-
-    @Test
-    public void test_quotes() throws Exception {
-        // @formatter:off
-        assertEquals("((b)a)\\2(c)\\Q1\\2\\3\\)c())b(a(\\E\\3\\1",                  reversed("(a(b))(c)\\Q(a(b))(c)\\3\\2\\1\\E\\3\\2\\1"));
         // @formatter:on
     }
 
@@ -305,4 +305,21 @@ public class ReversePatternTest {
         assertEquals("(?<!\\Q\\\\E)(\\Q\\\\\\E)(?!\\Q\\\\E)",                    reversed("(?<!\\Q\\\\E)(\\Q\\\\\\E)(?!\\Q\\\\E)"));
         // @formatter:on
     }
+
+    @Test
+    public void test_backwardsBackSlashesUnterminated() throws Exception {
+        thrown.expect(PatternSyntaxException.class);
+        // @formatter:off
+        assertEquals("(?<!\\Q\\E)(\\Q\\\\\\E)(?!\\Q\\)",                    reversed("(?<!\\Q\\E)(\\Q\\\\\\E)(?!\\Q\\)"));
+        // @formatter:on
+    }
+
+    @Test
+    public void test_quotes() throws Exception {
+        // @formatter:off
+        assertEquals("((b)a)\\2(c)\\Q1\\2\\3\\)c())b(a(\\E\\3\\1",                  reversed("(a(b))(c)\\Q(a(b))(c)\\3\\2\\1\\E\\3\\2\\1"));
+        // @formatter:on
+    }
+
+
 }
