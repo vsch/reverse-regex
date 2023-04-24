@@ -1,13 +1,17 @@
+//file:noinspection GroovyAssignabilityCheck
 plugins {
     id "java"
     id "com.vladsch.reverse-regex.java-conventions"
     id "maven-publish"
+    id "signing"
 }
 
 def javaVersion = properties["javaVersion"] ?: "11"
 def projectVersion = properties["projectVersion"] ?: "1.0.SNAPSHOT"
+def projectGroup = properties["projectGroup"] ?: "com.vladsch.unknown"
+def projectUrl = properties["projectUrl"] ?: "https://github.com/vsch/unknown"
 
-group = "com.vladsch.reverse-regex"
+group = projectGroup
 version = projectVersion
 
 repositories {
@@ -25,14 +29,21 @@ publishing {
             pom {
                 name = "reverse-regex-util"
                 description = "reverse regex implementation module"
+
+                withXml {
+                    asNode()
+                            .appendNode('parent')
+                            .with {
+                                appendNode "groupId", projectGroup
+                                appendNode "artifactId", "reverse-regex"
+                                appendNode "version", projectVersion
+                            }
+                }
             }
         }
     }
 
     repositories {
-        mavenLocal {
-
-        }
         maven {
             name = "OSSRH"
             url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
@@ -41,6 +52,7 @@ publishing {
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
+/*
         maven {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/vsch/reverse-regex"
@@ -49,7 +61,13 @@ publishing {
                 password = System.getenv("GITHUB_TOKEN")
             }
         }
+*/
     }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications
 }
 
 // Set the JVM compatibility versions

@@ -1,14 +1,22 @@
+//file:noinspection GroovyAssignabilityCheck
 plugins {
     id "java"
     id "maven-publish"
+    id "signing"
 }
 
 def projectVersion = properties["projectVersion"] ?: "1.0.SNAPSHOT"
-group = "com.vladsch.reverse-regex"
+def projectGroup = properties["projectGroup"] ?: "com.vladsch.unknown"
+def projectModules = properties["projectModules"] ?: "com.vladsch.unknown"
+def projectUrl = properties["projectUrl"] ?: "https://github.com/vsch/unknown"
+
+group = projectGroup
 version = projectVersion
 
 dependencies {
-    module "com.vladsch.reverse-regex:reverse-regex-util:$projectVersion"
+    projectModules.split(",").each {
+        module "${projectGroup}:${it}:${projectVersion}"
+    }
 }
 
 publishing {
@@ -17,30 +25,35 @@ publishing {
             pom {
                 name = "reverse-regex"
                 description = "Java Implementation of RegEx Pattern Reversing library for backwards searching using Java Pattern class and a reversed character sequence of the original text"
-                url = "https://github.com/vsch/reverse-regex"
+                url = projectUrl
+
                 licenses {
                     license {
                         name = "GNU Lesser General Public License version 2.1"
                         url = "https://opensource.org/licenses/LGPL-2.1"
                     }
                 }
-                
+
                 developers {
                     developer {
                         id = "vsch"
                         name = "Vladimir Schneider"
                         email = "vladimir.schneider@gmail.com"
-                        organizationUrl= "https://github.com/vsch/"
+                        organizationUrl = "https://github.com/vsch/"
                     }
+                }
+
+                scm {
+                    connection = "scm:git:git@github.com:vsch/reverse-regex.git"
+                    developerConnection = "scm:git:git@github.com:vsch/reverse-regex.git"
+                    url = projectUrl
+                    tag = projectVersion
                 }
             }
         }
     }
 
     repositories {
-        mavenLocal {
-
-        }
         maven {
             name = "OSSRH"
             url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
@@ -49,6 +62,7 @@ publishing {
                 password = System.getenv("MAVEN_PASSWORD")
             }
         }
+/*
         maven {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/vsch/reverse-regex"
@@ -57,5 +71,12 @@ publishing {
                 password = System.getenv("GITHUB_TOKEN")
             }
         }
+*/
     }
 }
+
+signing {
+    useGpgCmd()
+    sign publishing.publications
+}
+

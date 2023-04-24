@@ -1,7 +1,9 @@
 # reverse-regex
 
-[TOC]: # ""
+[TOC]: # "Version History"
 
+### Version History
+- [1.0.x Next](#10x-next)
 - [1.0.2](#102)
 - [1.0.0](#100)
 - [0.3.6](#036)
@@ -12,11 +14,15 @@
 - [0.2.0](#020)
 - [0.1.0](#010)
 
+## 1.0.x Next
+
+* Change: remove GitHub package publishing. Too limited and not worth the effort.
+
 ## 1.0.2
 
 * Change: version number. For some reason 1.0.0 was published but would not work as a
-  dependency. It would silently fail to download the jar. Comparing local and github packages
-  showed a difference on the module md5,sha1,sha256,sha512 checksums. Everything else was the
+  dependency. It would silently fail to download the jar. Comparing local and GitHub packages
+  showed a difference on the module md5, sha1, sha256, sha512 checksums. Everything else was the
   same. Changing the version and republishing fixed the issue.
 
 ## 1.0.0

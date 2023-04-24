@@ -11,8 +11,24 @@ standard RegEx Java classes on a reversed character sequence of original text.
 * Version 1.0.0+ requires Java 11 or above, previous versions Java 8 or above
 * The core has no dependencies
 
-[![Build status](https://travis-ci.org/vsch/reverse-regex.svg?branch=master)](https://travis-ci.org/vsch/reverse-regex)
 [![Maven Central status](https://img.shields.io/maven-central/v/com.vladsch.reverse-regex/reverse-regex.svg)](https://search.maven.org/search?q=g:com.vladsch.reverse-regex)
+
+### Usage
+
+#### Maven Dependency
+
+```xml
+<dependency>
+    <groupId>com.vladsch.reverse-regex</groupId>
+    <artifactId>reverse-regex-util</artifactId>
+    <version>1.0.2</version>
+</dependency>
+```
+#### Gradle Dependency
+
+```groovy
+implementation 'com.vladsch.reverse-regex:reverse-regex-util:1.0.2'
+```
 
 ### Examples:
 
