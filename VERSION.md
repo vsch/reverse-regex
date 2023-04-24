@@ -1,7 +1,8 @@
 # reverse-regex
 
-[TOC]: # " "
+[TOC]: # ""
 
+- [1.0.2](#102)
 - [1.0.0](#100)
 - [0.3.6](#036)
 - [0.3.4](#034)
@@ -11,6 +12,12 @@
 - [0.2.0](#020)
 - [0.1.0](#010)
 
+## 1.0.2
+
+* Change: version number. For some reason 1.0.0 was published but would not work as a
+  dependency. It would silently fail to download the jar. Comparing local and github packages
+  showed a difference on the module md5,sha1,sha256,sha512 checksums. Everything else was the
+  same. Changing the version and republishing fixed the issue.
 
 ## 1.0.0
 
@@ -53,11 +60,11 @@
 
 ## 0.2.0
 
-- Add: `ReverseMatcher`
+* Add: `ReverseMatcher`
 
-- Add: tests for reversed regex, reverse matcher and reversed char sequence
+* Add: tests for reversed regex, reverse matcher and reversed char sequence
 
 ## 0.1.0
 
-- Initial version commit
+* Initial version commit
 
