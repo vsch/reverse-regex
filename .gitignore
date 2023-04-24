@@ -12,3 +12,8 @@ target/
 /ReverseRegExAssets/
 /update-plugin.sh
 /out/
+/.gradle/
+/build/
+/buildSrc/.gradle/
+/buildSrc/build/
+

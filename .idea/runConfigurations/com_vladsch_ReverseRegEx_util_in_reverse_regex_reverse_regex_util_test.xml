@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="com.vladsch.ReverseRegEx.util in reverse-regex.reverse-regex-util.test" type="JUnit" factoryName="JUnit" singleton="true" nameIsGenerated="true">
+    <module name="reverse-regex.reverse-regex-util.test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.vladsch.ReverseRegEx.util.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="com.vladsch.ReverseRegEx.util" />
+    <option name="MAIN_CLASS_NAME" value="" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="package" />
+    <option name="PARAMETERS" value="" />
+    <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

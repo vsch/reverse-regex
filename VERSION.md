@@ -1,11 +1,7 @@
-reverse-regex
-=============
-
-&nbsp;<details id="version-history"><summary>**Version History**</summary>
+# reverse-regex
 
 [TOC]: # " "
 
-- [To Do](#to-do)
 - [0.3.6](#036)
 - [0.3.4](#034)
 - [0.3.2](#032)
@@ -14,14 +10,6 @@ reverse-regex
 - [0.2.0](#020)
 - [0.1.0](#010)
 
-
-&nbsp;</details>
-
-&nbsp;<details id="version-history"><summary>**To Do**</summary>
-
-## To Do
-
-&nbsp;</details>
 
 0.3.6
 -----

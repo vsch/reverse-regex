@@ -1,0 +1,64 @@
+plugins {
+    id "java"
+    id "com.vladsch.reverse-regex.java-conventions"
+    id "maven-publish"
+}
+
+def javaVersion = properties["javaVersion"] ?: "11"
+def projectVersion = properties["projectVersion"] ?: "1.0.SNAPSHOT"
+
+group = "com.vladsch.reverse-regex"
+version = projectVersion
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    testImplementation "junit:junit:4.13.2"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = "reverse-regex"
+                description = "reverse regex implementation module"
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal {
+
+        }
+        maven {
+            name = "OSSRH"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/vsch/reverse-regex"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+// Set the JVM compatibility versions
+compileJava {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}

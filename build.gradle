@@ -1,0 +1,61 @@
+plugins {
+    id "java"
+    id "maven-publish"
+}
+
+def projectVersion = properties["projectVersion"] ?: "1.0.SNAPSHOT"
+group = "com.vladsch.reverse-regex"
+version = projectVersion
+
+dependencies {
+    module "com.vladsch.reverse-regex:reverse-regex-util:$projectVersion"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = "reverse-regex"
+                description = "Java Implementation of RegEx Pattern Reversing library for backwards searching using Java Pattern class and a reversed character sequence of the original text"
+                url = "https://github.com/vsch/reverse-regex"
+                licenses {
+                    license {
+                        name = "GNU Lesser General Public License version 2.1"
+                        url = "https://opensource.org/licenses/LGPL-2.1"
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = "vsch"
+                        name = "Vladimir Schneider"
+                        email = "vladimir.schneider@gmail.com"
+                        organizationUrl= "https://github.com/vsch/"
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal {
+
+        }
+        maven {
+            name = "OSSRH"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/vsch/reverse-regex"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}

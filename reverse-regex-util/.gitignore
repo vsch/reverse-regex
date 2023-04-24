@@ -1,0 +1,13 @@
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IntelliJ IDEA
+
+# Maven
+target/
+/out/
+/.gradle/
+/build/
+
