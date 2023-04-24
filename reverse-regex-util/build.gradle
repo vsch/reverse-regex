@@ -21,9 +21,9 @@ dependencies {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        maven(MavenPublication) {
             pom {
-                name = "reverse-regex"
+                name = "reverse-regex-util"
                 description = "reverse regex implementation module"
             }
         }

@@ -2,13 +2,13 @@ reverse-regex
 =============
 
 **reverse-regex** is a Java utility library that allows Java to perform backward search using
-standard RegEx Java classes on a reversed character sequence of original text.
+standard RegEx Java classes on a reversed character sequence of original text. 
 
-[![GitQ](https://gitq.com/badge.svg)](https://gitq.com/vsch/reverse-regex)
+[reverse-regex on Maven Central] 
 
 ### Requirements
 
-* Java 8 or above
+* Version 1.0.0 requires Java 11 or above, previous versions Java 8 or above
 * The core has no dependencies
 
 [![Build status](https://travis-ci.org/vsch/reverse-regex.svg?branch=master)](https://travis-ci.org/vsch/reverse-regex)
@@ -238,20 +238,19 @@ Pull requests, issues and comments welcome :smile:. For pull requests:
 License
 -------
 
-Copyright (c) 2016-2017, Vladimir Schneider <vladimir.schneider@gmail.com>,
+Copyright (c) 2016-2023, Vladimir Schneider <vladimir.schneider@gmail.com>,
 
-GNU LESSER GENERAL PUBLIC LICENSE Version 2.1 licensed, see [LICENSE] file.
+GNU LESSER GENERAL PUBLIC LICENSE Version 2.1 licensed, see [LICENSE.txt] file.
 
-[LICENSE]: https://github.com/vsch/reverse-regex/blob/master/LICENSE
+[LICENSE.txt]: https://github.com/vsch/reverse-regex/blob/master/LICENSE.txt
 [Mia: Missing In Actions]: https://plugins.jetbrains.com/idea/plugin/9257-missing-in-actions
-[All about me]: https://vladsch.com/about
-[Android Studio]: http://developer.android.com/sdk/installing/studio.html
+[Android Studio]: https://developer.android.com/sdk/installing/studio.html
 [GitHub Issues page]: https://github.com/vsch/reverse-regex/issues
-[Markdown Navigator]: http://vladsch.com/product/markdown-navigator
+[Markdown Navigator]: https://github.com/vsch/idea-multimarkdown
 [Maven Central status]: https://img.shields.io/maven-central/v/com.vladsch.reverse-regex/reverse-regex.svg
-[MultiMarkdown]: http://fletcherpenney.net/multimarkdown/
-[Semantic Versioning]: http://semver.org/
+[MultiMarkdown]: https://fletcherpenney.net/multimarkdown
+[Semantic Versioning]: https://semver.org
 [reverse-regex]: https://github.com/vsch/reverse-regex
-[reverse-regex on Maven]: https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.vladsch.reverse-regex%22
+[reverse-regex on Maven Central]: https://central.sonatype.com/search?smo=true&q=com.vladsch.reverse-regex
 [reverse-regex wiki]: https://github.com/vsch/reverse-regex/wiki
 

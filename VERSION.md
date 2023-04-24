@@ -2,6 +2,7 @@
 
 [TOC]: # " "
 
+- [1.0.0](#100)
 - [0.3.6](#036)
 - [0.3.4](#034)
 - [0.3.2](#032)
@@ -11,31 +12,32 @@
 - [0.1.0](#010)
 
 
-0.3.6
------
+## 1.0.0
+
+* Change: to gradle build
+* Change: build to java 11
+* Change: min java version 11
+
+## 0.3.6
 
 * Fix: improper parsing of `\Q\E` with odd number of backslashes would generate
   PatternSyntaxException.
 
-0.3.4
------
+## 0.3.4
 
 * change project java to 1.8
 * reformat code
 
-0.3.2
------
+## 0.3.2
 
 * Change: min java version to 1.8
 * Fix: pom url
 
-0.3.1
------
+## 0.3.1
 
 * Fix: #1, `\Q` `\E` not supported inside character classes
 
-0.3.0
------
+## 0.3.0
 
 * Add: `RegExMatcher` interface to allow access to reverse and forward searches through a single
   type.
@@ -49,15 +51,13 @@
 
 * Change: rename `ReversedRegEx` to `ReversePattern`
 
-0.2.0
------
+## 0.2.0
 
 - Add: `ReverseMatcher`
 
 - Add: tests for reversed regex, reverse matcher and reversed char sequence
 
-0.1.0
------
+## 0.1.0
 
 - Initial version commit
 

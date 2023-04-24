@@ -13,7 +13,7 @@ dependencies {
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        maven(MavenPublication) {
             pom {
                 name = "reverse-regex"
                 description = "Java Implementation of RegEx Pattern Reversing library for backwards searching using Java Pattern class and a reversed character sequence of the original text"
